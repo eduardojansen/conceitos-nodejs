@@ -28,7 +28,7 @@ app.post("/repositories", (request, response) => {
   
     repositories.push(repository);
 
-    response.json(repository);
+    return response.json(repository);
 });
 
 app.put("/repositories/:id", (request, response) => {
@@ -38,14 +38,14 @@ app.put("/repositories/:id", (request, response) => {
   const repository = repositories.find(repository => repository.id === id);
 
   if (!repository) {
-    response.status(400).send();
+    return response.status(400).send();
   }
 
   repository.url = url;
   repository.title = title;
   repository.techs = techs;
 
-  response.json(repository);
+  return response.json(repository);
 
 });
 
@@ -55,12 +55,12 @@ app.delete("/repositories/:id", (request, response) => {
   const repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
   if (repositoryIndex === -1) {
-    response.status(400).send();
+    return response.status(400).send();
   }
 
-  repositories.splice(repositoryIndex,1);
+  repositories.splice(repositoryIndex, 1);
 
-  response.status(204).send();
+  return response.status(204).send();
 
 });
 
@@ -70,12 +70,12 @@ app.post("/repositories/:id/like", (request, response) => {
   const repository = repositories.find(repository => repository.id === id);
 
   if (!repository) {
-    response.status(400).send();
+    return response.status(400).send();
   }
   
   repository.likes += 1;
 
-  response.json(repository);
+  return response.json(repository);
 });
 
 module.exports = app;
